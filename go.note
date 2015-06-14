@@ -1,0 +1,16 @@
+const vs var
+const cannot infer string type, var does
+FOR: short syntax does not create var, long syntax can (with inference)
+IF statement inside !! no ternary !
+array chelou var arr[4]int or arr := [5]5int{1,2,3,4,4}
+[] slice upper bound EXCLUSIV !! no inclusif!!
+compilator error on unused variables
+use _ instead if you dont want to use it. Cannot use _, only declaration
+WTF ? 
+    => value,present = arr[2]
+    => index,value = range arr
+cannot redefine array ? 
+    = cannot use [2]int literal (type [2]int) as type [1]int in assignment
+pointers on struct deference itself with struct.field
+receiver on function pretty cool, like implementaiton in C++
+receiver : when type is not a pointer, local copy is made !!
