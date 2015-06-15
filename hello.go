@@ -3,6 +3,12 @@ package main
 import "fmt"
 import "time"
 import "strconv"
+import "errors"
+import "sort"
+import "os"
+import "strings"
+import r "regexp"
+import "math/rand"
 
 const constStr string = "My First Const String"
 const constInt  = 56878
@@ -111,6 +117,62 @@ func main() {
     
     fmt.Println("interface method present(): ", presentation(pb1))
     //fmt.Println("interface method pesentation2: ",presentation2(pb1))
+    /* ERRORS */
+    if v,e := raiser(4); e != nil{
+        fmt.Printf("Raised error : %s\n",e)
+    }else {
+        fmt.Println("No error raised with value %d\n",v)
+    }
+    /* SORING */
+    strs := []string{"dude","i","am","allright"}
+    sort.Strings(strs)
+    // C
+    fmt.Println(strs)
+    /* FILE */
+    if f,err := os.Create("test.txt"); err != nil {
+        panic(err)
+    } else  {
+        defer f.Close()
+        fmt.Fprintln(f,"test data go")
+        fmt.Println("Data written to file !!")
+    }
+    /* Function argument */
+    ff := func (val string) bool { 
+            if i := strings.Index(val,"l"); i != -1 {
+                return true
+            }
+        return false 
+    }
+    if PIsTrue("hello",ff) {
+        fmt.Println("Function argument working with hello")
+    } else {
+        fmt.Println("Problem with function arugment ??")
+    }
+    /* REGEXP */
+    str4 := "Peach Peer Punch Apple"
+    reg,_ := r.Compile("P([a-z]+)h")
+    fmt.Println(reg.FindAllString(str4,-1))
+    /* RANDOM */
+     // < 100
+     s1 := rand.NewSource(56)
+    r1 := rand.New(s1)
+    fmt.Println("Random #1 : " ,rand.Intn(100))
+    fmt.Println("Random seeded : ",r1.Intn(50))
+}
+
+func PIsTrue(val string,f func(string) bool) bool {
+    for _,v := range val {
+        if f(string(v)) {
+            return true
+        }
+    }
+    return false
+}
+func raiser(v int) (int,error) {
+    if v >= 2 {
+        return -1,errors.New("value > 2... ERROR")
+    }
+    return v,nil
 }
 
 type human interface {

@@ -16,4 +16,12 @@ receiver on function pretty cool, like implementaiton in C++
 receiver : when type is not a pointer, local copy is made !!
 receiver : defined on pointer => call works with value adn pointer
                       value   => call only works with value
-           cannot deference interface type ?
+           ==> in fact, 
+
+sorting : can sort using interface Less, Swap, Len ==> sort.Sort(ByLength(fruits)) casting !!
+string use rune when with range, so return unicode instead of character, must type to string(v)
+formating : %T type
+            %t bool
+            %b binary
+            %x hex
+            .(type) to know the type ;)
