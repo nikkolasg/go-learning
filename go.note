@@ -14,3 +14,6 @@ cannot redefine array ?
 pointers on struct deference itself with struct.field
 receiver on function pretty cool, like implementaiton in C++
 receiver : when type is not a pointer, local copy is made !!
+receiver : defined on pointer => call works with value adn pointer
+                      value   => call only works with value
+           cannot deference interface type ?

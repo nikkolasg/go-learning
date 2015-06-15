@@ -97,26 +97,34 @@ func main() {
     /* STRUCT */
     p1 := person{age: 40,name: "moha"}
     b1 := baby{name: "baby",age: 2}
+    pb1 := &b1
     fmt.Println("struct p1 : ", p1)
-    age := &p1
-    fmt.Println("struct pointer p1 : ", age.age)
-    fmt.Println("struct before receiver ", age)
-    age.older()
-    fmt.Println("after : ",age)
+    pp1 := &p1
+    fmt.Println("struct pointer p1 : ", pp1.age)
+    fmt.Println("struct before receiver ", pp1)
+    pp1.older()
+    fmt.Println("after : ",pp1)
     /* INTERFACES */
-    fmt.Println("interface human:present() : ", age.present())
+    fmt.Println("interface human:present() : ", pp1.present())
+    /* works because receiver pointer type acccept for pointer and value */
     fmt.Println("baby human:present() : ", b1.present())
-    fmt.Println("interface method present(): ", presentation(b1))
+    
+    fmt.Println("interface method present(): ", presentation(pb1))
+    //fmt.Println("interface method pesentation2: ",presentation2(pb1))
 }
+
 type human interface {
     present() string
 }
+
 func (p *person) present() string {
     return "My name is " + p.name + " of " +strconv.Itoa(p.age) +  "years old"
 }
+/** cannot call with value directly for interface i think */
 func (b *baby) present() string {
     return "Baby name is " + b.name + " of " + strconv.Itoa(b.age)
 }
+
 func presentation(h human) string {
     return h.present()
 }
