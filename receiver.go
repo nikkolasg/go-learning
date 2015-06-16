@@ -33,10 +33,14 @@ func move(w Walker) {
 func describe(h Human) {
     fmt.Println("Human named : ", h.name)
 }
+func describePointer(h *Human) {
+    fmt.Println("Human pointer named : ", h.name)
+}
 func main () {
     h1 := Human{name: "Robert" }
     r1 := Robot{model: "R2D2" }
     move(&h1)
     move(&r1)
-    describe(&h1)
+    describe(h1)
+    describePointer(h1)
 }
