@@ -11,13 +11,14 @@ WTF ?
     => index,value = range arr
 cannot redefine array ? 
     = cannot use [2]int literal (type [2]int) as type [1]int in assignment
+ARRAY : is a basic type ==> copy on values not on pointer !!
 pointers on struct deference itself with struct.field
 receiver on function pretty cool, like implementaiton in C++
 receiver : when type is not a pointer, local copy is made !!
-receiver : defined on pointer => call works with value adn pointer
-                      value   => call only works with value
-           ==> in fact, 
-
+        WRONG : (d Dog) can accept Dog and *Dog, but (d *Dog) can only accept *Dog
+        BUT FOR FUNCTION DEFERENCING IS AUTOMATIC
+        ==> notif(n Notifier) == works with notifier and &notifier
+        ==> notif(n *notifier) == work with both also !!
 sorting : can sort using interface Less, Swap, Len ==> sort.Sort(ByLength(fruits)) casting !!
 string use rune when with range, so return unicode instead of character, must type to string(v)
 formating : %T type
@@ -25,3 +26,10 @@ formating : %T type
             %b binary
             %x hex
             .(type) to know the type ;)
+
+value.(type) {
+case string:
+return str
+case Stringer:
+return strString()
+}
