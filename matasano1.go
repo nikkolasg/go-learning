@@ -47,11 +47,27 @@ func fixedXOR(a,b []byte) ([]byte,error) {
     return c,nil
 }
 
+func keyFixedXor(key, msg string) string {
+    // quick hack padding instead of taking only part of the key at the end
+    for (len(msgb) % 3)  != 0 {
+        msgb = append(msgb,'0')
+    }
+    dst := make([]byte,len(msgb))
+
+    // loop over characters with index
+    for i,c := range msgb {
+        // char of the key to xor with
+        ck := key[i % len(key)]
+        dst[i] = c ^ ck
+    }
+    return string(dst)
+}
 
 func main() {
     input := []byte("Man is distinguished")
     out := hex2base64(input)
     fmt.Printf("1. input : %s ==> %s\n",string(input),string(out))
+    ////////////////////////////////////////////////////
     input1 := "1c0111001f010100061a024b53535009181c"
     input1h,_ := hex.DecodeString(input1)
     input2 := "686974207468652062756c6c277320657965"
@@ -59,5 +75,7 @@ func main() {
     xored, _ := fixedXOR(input1h,input2h)
     xord := hex.EncodeToString(xored)
     fmt.Printf("2. output : %s\n",xord)
+    ////////////////////////////////////////////////////
+
 }
 
