@@ -4,7 +4,6 @@ import (
     "os"
     "fmt"
     "net"
-    "io/ioutil"
     "time"
 )
 
@@ -24,26 +23,30 @@ func main() {
     msgchan := make(chan string)
     go logMsg(msgchan)
     for {
-    con,err := listener.Accept()
+        con,err := listener.Accept()
         if err != nil {
-             fmt.Fprintf(os.Stderr,"Error while Accepting connection.\n%s\nAbort.",err.Error())
+            fmt.Fprintf(os.Stderr,"Error while Accepting connection.\n%s\nAbort.",err.Error())
             os.Exit(1)
         }
-    go handleConnection(con,msgchan)
+        go handleConnection(con,msgchan)
     }
-    }
+}
 
 func handleConnection(con net.Conn,msgChan chan <- string) {
     defer con.Close()
     fmt.Printf("Received Connection from : %s\n",con.RemoteAddr().String())
     buf := make([]byte,4096)
     n,err := con.Read(buf)
-    if err != nil {
+    if err != nil{
         fmt.Fprintf(os.Stderr,"Error while reading socket.\n%s\nAbort.",err.Error())
         os.Exit(1)
     }
+    if n == 0 {
+        fmt.Fprintf(os.Stderr,"Nothing received. Abort.\n")
+        os.Exit(0)
+    }
     msgChan <- string(buf[:n])
-    ts := time.Now().String() + " (echo) : " + string(val)
+    ts := time.Now().String() + " (echo) : " + string(buf[:n])
     i,err := con.Write([]byte(ts))
     if err != nil {
         fmt.Fprintf(os.Stderr,"Error while sending back echoing.\n%s\nAbort.",err.Error())
@@ -54,7 +57,8 @@ func handleConnection(con net.Conn,msgChan chan <- string) {
 }
 
 func logMsg(msgChan <- chan string) {
-    for msg := range msgChan {
+    for  {
+        msg := <-msgChan
         fmt.Printf("Message Received : %s\n",msg)
     }
 }

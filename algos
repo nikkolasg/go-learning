@@ -1,0 +1,53 @@
+DH:
+        => p and base g
+        Alice : a, Bob : b
+        => g^a -> g^b -> g^ab
+RSA:
+        personal : p,q, n = pq
+        e such gcd(e,phi(n)) = 1
+        ==> e public key, d = e^-1 mod n
+ElGamal:
+        group G with order q with generator g
+        random x {1,q-1}
+        h = g^x
+        public is h,G,q,g // private is x
+        Ecnryption :
+            y {1,q-1} => c1 = g^y
+            s = h^y
+            msg => m' belonging to G
+            c2 = m' * s
+            ==> send c1,c2
+        Decrpytion:
+            s = c^x
+            m' = c2 * s^-1 => convert back to m
+
+DSA:
+    parameters :
+        H hash func
+        L,N crpto length key
+        q prime of N bit
+        p prime L bit & p-1 | q
+        g 
+    private
+        x < q
+        y = g^x
+        public is p,q,g,y // private is x
+
+    signing:
+        r = g^k mod p mod q
+        s = k^-1(H(m) + xr) mod q
+        signature is r,s
+    Verifying:
+        w = s^-1
+        u1 = H(m)*w mod q
+        ...
+
+ECDSA
+    parameters CURVE, G, n (nxG = 0)
+    public Qa = da x G with da private
+    sign with algorithm like DSA
+ECDH : kes aggreement
+    elliptic curve over Diffie Hellman
+    Alice & Bob each public/private key pair
+    ==> Da*Qb = Da*Db*G = DbDaG=DbQa
+
